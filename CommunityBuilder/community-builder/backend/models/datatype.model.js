@@ -7,7 +7,7 @@ const datatype = new Schema({
         required : true
     },
     datatypeField:{
-        type: String,
+        type: String , //[Schema.Types.ObjectId, ref = 'fields'],
         required : true
     }
 },

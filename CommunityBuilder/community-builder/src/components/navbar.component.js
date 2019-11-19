@@ -13,7 +13,7 @@ export default class Navbar extends React.Component {
           <Link to="/" className="nav-link">Communities</Link>
           </li>
           <li className="navbar-item">
-          <Link to="/create" className="nav-link">Create Community Log</Link>
+          <Link to="/create" className="nav-link">Create Community</Link>
           </li>
           <li className="navbar-item">
           <Link to="/user" className="nav-link">Create User</Link>

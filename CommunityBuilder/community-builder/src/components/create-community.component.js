@@ -12,6 +12,9 @@ export default class CreateCommunity extends Component {
     this.onChangeDataType = this.onChangeDataType.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.addField = this.addField.bind(this);
+    this.onChangeField = this.addField.bind(this);
+    this.onChangeFieldName = this.addField.bind(this);
+
     //this.onChangeTag = this.onChangeTag.bind(this);
 
     this.state = {
@@ -19,8 +22,7 @@ export default class CreateCommunity extends Component {
       communityDescription: '',
       communityDataType: [],
       communityTag:[],
-      dataType: [{name: '', fields: ''}]
-      //fields: []
+      dataType: [{name: '', field: ''}], 
     };
   }
   onChangeName = (e) => {
@@ -39,19 +41,30 @@ export default class CreateCommunity extends Component {
       communityDataType: e.target.value
     })
   };
+  onChangeField = (e) => {
+    this.setState({
+      communityDataType: e.target.value
+    })
+  };
+  onChangeFieldName = (e) => {
+    this.setState({
+      communityDataType: e.target.value
+    })
+  };
 
  
   handleAdd = (e) => {
     console.log("I am pressed");  
-    if (["nameForField", "field"].includes(e.target.className) ) {
+    if (["name", "field"].includes(e.target.className) ) {
       let dataType = [...this.state.dataType]
-      dataType[e.target.dataset.id][e.target.className] = e.target.value.toUpperCase()
+      dataType[e.target.dataset.id][e.target.className] = e.target.value
       this.setState({ dataType }, () => console.log(this.state.dataType))
     } else {
       this.setState({ [e.target.name]: e.target.value.toUpperCase() })
     }
   }
 addField = (e) => {
+  console.log("Pressed");
     this.setState((prevState) => ({
       dataType: [...prevState.dataType, {name:"", field:""}],
     }));
@@ -63,7 +76,7 @@ addField = (e) => {
  const newCommunity = {
       communityName : this.state.communityName,
       communityDescription : this.state.communityDescription,
-      communityDatatype : this.state.communityDataType,
+      communityDatatype : this.state.dataType,
       communityTags : this.state.communityDataType
     }
     console.log(newCommunity);
@@ -78,7 +91,7 @@ addField = (e) => {
     return (
       <div>
           <h3>Create New Community</h3>
-          <form onSubmit = {this.onSubmit}>
+          <form onSubmit = {this.onSubmit} onChange={this.handleAdd}>
             <div className="form-group"> 
               <label>Name of community: </label>
               <input  type="text"
@@ -115,15 +128,17 @@ addField = (e) => {
                   let nameId = `name-${idx}`, fieldId = `field-${idx}`
                   return (
                     <div key={idx}>
-                      <label htmlFor={fieldId}>Field</label>
+                      <label htmlFor={fieldId}>Name of DataType</label>
                       <input
                         type="text"
                         name={nameId}
                         data-id={idx}
                         id={nameId}
-                        value={dataType[idx].names} 
+                        value={dataType[idx].name} 
+                        onChange = {this.onChangeFieldName}
                         className="name"
                       />
+                      <br></br>
                       <label htmlFor={fieldId}>Field</label>
                       <input
                         type="text"
@@ -131,6 +146,7 @@ addField = (e) => {
                         data-id={idx}
                         id={fieldId}
                         value={dataType[idx].field} 
+                        onChange = {this.onChangeField}
                         className="field"
                       />
                     </div>
@@ -139,7 +155,6 @@ addField = (e) => {
               }
             </div>
             
-
             <div className="form-group">
               <input type="submit" value="Create Community" className="btn btn-primary" />
             </div>

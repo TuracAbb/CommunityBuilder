@@ -11,7 +11,7 @@ const communitySchema = new Schema({
         required : true
     },
     communityDataTypes :{
-        type:String,
+        type:[Schema.Types.ObjectId, ref = 'datatype'],
         required:true
     },
     communityTags :{
