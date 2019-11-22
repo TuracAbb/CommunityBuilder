@@ -129,6 +129,7 @@ addField = (e) => {
                   return (
                     <div key={idx}>
                       <label htmlFor={fieldId}>Name of DataType</label>
+                      <br></br>
                       <input
                         type="text"
                         name={nameId}
@@ -140,15 +141,30 @@ addField = (e) => {
                       />
                       <br></br>
                       <label htmlFor={fieldId}>Field</label>
-                      <input
-                        type="text"
-                        name={fieldId}
-                        data-id={idx}
-                        id={fieldId}
-                        value={dataType[idx].field} 
-                        onChange = {this.onChangeField}
-                        className="field"
-                      />
+                      <form>
+                        <div className="form-row">
+                          <div className="col">
+                            <input type="text" className="form-control" placeholder="Name"/>
+                          </div>
+                          <div className="col">
+                            <select id="inputState" className="form-control">
+                              <option selected>Type</option>
+                              <option>Number</option>
+                              <option>Text</option>
+                              <option>Image</option>
+                              <option>URL</option>
+                              <option>GeoLocation</option>
+                            </select>
+                          </div>
+                          <div className="col">
+                            <select id="inputState" className="form-control">
+                              <option selected>Required?</option>
+                              <option>Yes</option>
+                              <option>No</option>
+                            </select>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                   )
                 })
