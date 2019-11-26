@@ -40,10 +40,11 @@ router.route('/login').post((req, res) => {
                 let token = jwt.sign(payload, process.env.SECRET_KEY,{
                     expiresIn:1440
                 })
-                res.send("Logined successfully! Here is token: " + token)
+                //res.send(token)
+                res.json({data: token, error: ""})
             }
             else{
-                res.json({error: "User does not exsist" })
+                res.json({data: "", error: "User does not exsist" })
             }
 
          }else{
@@ -51,6 +52,25 @@ router.route('/login').post((req, res) => {
          }})
          .catch(err => res.status(400).json('Error: ' + err))
 });
+
+
+router.route('/profile').get((req, res) => {
+    var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
+  
+    User.findOne({
+      _id: decoded._id
+    })
+      .then(user => {
+        if (user) {
+          res.json(user)
+        } else {
+          res.send('User does not exist')
+        }
+      })
+      .catch(err => {
+        res.send('error: ' + err)
+      })
+  });
 
 module.exports = router;
 

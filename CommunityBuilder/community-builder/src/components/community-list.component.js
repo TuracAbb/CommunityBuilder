@@ -3,22 +3,25 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const Community = props => (
-  <tr>
-    <td>{props.community.communityName}</td>
-    <td>{props.community.communityDescription}</td>
-    <td>
-      <Link to={"/join/"+props.community._id}>Join</Link> 
-    </td>
-  </tr>
-)
+const CommunityListingRow = ({row}) =>{
+  return (
+
+    <tr className = "">
+      <td> <Link to={"/communityPage"} onClick = {() =>this.clickCommunity(row._id)}>{row.communityName}</Link></td>
+      <td>{row.communityDescription}</td>
+    </tr>
+
+  )
+}
 
 export default class CommunityList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {communities: []};
-  }
+    this.handleClick = this.handleClick.bind(this);
+    this.clickCommunity = this.clickCommunity.bind(this);
+}
 
   componentDidMount() {
     axios.get('http://localhost:5000/community/')
@@ -29,11 +32,22 @@ export default class CommunityList extends React.Component {
         console.log(error);
       })
   }
+  handleClick = (e) => {
+    console.log(e.target._id)
+  };
+  clickCommunity = (id) => {
+    console.log( 'HERE IS ID ' + id)
+    //once, id verip community alan bir router yazacagim ve burada o idyi biliglerini linkte state koy , sonra, donen bilgileri de create-page sayfasina pushlayacagim
+    //how to pass params with history push
+
+    
+  };
 
   communityList() {
-    return this.state.communities.map(currentCommunity => {
-      return <Community community={currentCommunity} key={currentCommunity._id}/>;
-    })
+    return this.state.communities
+    //.map(currentCommunity => {
+     // return <Community community={currentCommunity} key={currentCommunity._id} onClick={this.handleClick}/>;
+    //})
   }
   render() {
     return (
@@ -44,14 +58,16 @@ export default class CommunityList extends React.Component {
             <tr>
               <th>Name</th>
               <th>Description</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            { this.communityList() }
+            { this.state.communities.map(c=>
+              <CommunityListingRow key={c._id} row= {c}/>
+              ) }
           </tbody>
         </table>
       </div>
     );
   }
+  
 }

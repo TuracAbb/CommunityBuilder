@@ -8,6 +8,8 @@ import EditCommunity from "./components/edit-community.component";
 import CreateCommunity from "./components/create-community.component";
 import CreateUser from "./components/create-user.component";
 import CommunityPage from "./components/community-page.component.js";
+import Register from "./components/register.component.js";
+import Profile from "./components/profile.component";
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
        <Route path = "/create" exact component = {CreateCommunity}/>
        <Route path = "/user" exact component = {CreateUser}/>
        <Route path = "/community" exact component = {CommunityPage}/>
+       <Route path = "/register" exact component = {Register}/>
+       <Route path = "/profile" exact component = {Profile}/>
 
        </div> 
      </Router>
