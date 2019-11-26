@@ -17,8 +17,8 @@ router.route('/createCommunity').post((req, res) => {
     const newCommunity = new Community({communityName, communityDescription, communityDataTypes,communityTags });
 
     newCommunity.save()
-        .then(() => res.json('Community added'))
-        .catch(err => res.status(400).json('Error: ' + err))
+        .then(() => res.json({data: newCommunity, error: ""}))
+        .catch(err => res.json({data: "", error: err}))
 });
 
 router.route('/:id').get((req, res) => {

@@ -109,7 +109,8 @@ addField = (e) => {
                   value = {this.state.communityDescription}
                   onChange = {this.onChangeDescription}
                   />
-            </div>
+            </div> 
+              {/*
             <div className="form-group"> 
               <label>DataType of community: </label>
               <input  type="text"
@@ -119,6 +120,7 @@ addField = (e) => {
                   onChange = {this.onChangeDataType}
                   />
             </div>
+           
             <div className="form-group"> 
               <label>DataType of community: </label>
               <button type="button" onClick={() => this.handleAdd}>
@@ -170,6 +172,7 @@ addField = (e) => {
                 })
               }
             </div>
+            */}
             
             <div className="form-group">
               <input type="submit" value="Create Community" className="btn btn-primary" />
