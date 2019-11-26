@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 const Community = props => (
   <tr>
@@ -29,11 +27,6 @@ export default class CommunityList extends React.Component {
       })
   }
 
-  communityList() {
-    return this.state.communities.map(currentCommunity => {
-      return <Community community={currentCommunity} key={currentCommunity._id}/>;
-    })
-  }
   render() {
     return (
       <div>
