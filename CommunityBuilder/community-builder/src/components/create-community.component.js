@@ -110,69 +110,6 @@ addField = (e) => {
                   onChange = {this.onChangeDescription}
                   />
             </div> 
-              {/*
-            <div className="form-group"> 
-              <label>DataType of community: </label>
-              <input  type="text"
-                  required
-                  className="form-control"
-                  value = {this.state.communityDataType}
-                  onChange = {this.onChangeDataType}
-                  />
-            </div>
-           
-            <div className="form-group"> 
-              <label>DataType of community: </label>
-              <button type="button" onClick={() => this.handleAdd}>
-                  + Add
-              </button>{
-                dataType.map((val, idx)=>{
-                  let nameId = `name-${idx}`, fieldId = `field-${idx}`
-                  return (
-                    <div key={idx}>
-                      <label htmlFor={fieldId}>Name of DataType</label>
-                      <br></br>
-                      <input
-                        type="text"
-                        name={nameId}
-                        data-id={idx}
-                        id={nameId}
-                        value={dataType[idx].name} 
-                        onChange = {this.onChangeFieldName}
-                        className="name"
-                      />
-                      <br></br>
-                      <label htmlFor={fieldId}>Field</label>
-                      <form>
-                        <div className="form-row">
-                          <div className="col">
-                            <input type="text" className="form-control" placeholder="Name"/>
-                          </div>
-                          <div className="col">
-                            <select id="inputState" className="form-control">
-                              <option selected>Type</option>
-                              <option>Number</option>
-                              <option>Text</option>
-                              <option>Image</option>
-                              <option>URL</option>
-                              <option>GeoLocation</option>
-                            </select>
-                          </div>
-                          <div className="col">
-                            <select id="inputState" className="form-control">
-                              <option selected>Required?</option>
-                              <option>Yes</option>
-                              <option>No</option>
-                            </select>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                  )
-                })
-              }
-            </div>
-            */}
             
             <div className="form-group">
               <input type="submit" value="Create Community" className="btn btn-primary" />

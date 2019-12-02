@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const CommunityListingRow = ({row}) =>{
+const CommunityListingRow = ({row, click}) =>{
   
   return (
     <tr className = "">
-      <td> <Link to={"/communityPage" } onClick = {() =>this.clickCommunity(row._id)}>{row.communityName}</Link></td>
+      <td> <Link to={"/communityPage" } onClick = {click}>{row.communityName}</Link></td>
       <td>{row.communityDescription}</td>
     </tr>
 
@@ -17,8 +17,12 @@ const CommunityListingRow = ({row}) =>{
 export default class CommunityList extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {communities: []};
+    this.state = {communities: [], list: {
+        communityID: '',
+        communityName: '',
+        communityDescription: '',
+        communityTags: ''
+    }};
     this.handleClick = this.handleClick.bind(this);
     this.clickCommunity = this.clickCommunity.bind(this);
 
@@ -37,13 +41,27 @@ export default class CommunityList extends React.Component {
   handleClick = (e) => {
     console.log(e.target._id)
   };
+
+  getCommunityDetails = (id) =>{
+    axios.get('http://localhost:5000/community/' + id)
+      .then(response => {
+        localStorage.setItem('data', JSON.stringify(response.data));
+        debugger;
+        console.log(response.data);
+        this.props.history.push({
+          pathname: '/community-page',
+          state:{detail: response.data}
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
   clickCommunity = (id) => {
-    debugger;
     console.log( 'HERE IS ID ' + id)
     //once, id verip community alan bir router yazacagim ve burada o idyi biliglerini linkte state koy , sonra, donen bilgileri de create-page sayfasina pushlayacagim
     //how to pass params with history push
-
-    
+    this.getCommunityDetails(id);
   };
 
   communityList() {
@@ -65,8 +83,8 @@ export default class CommunityList extends React.Component {
           </thead>
           <tbody>
             { this.state.communities.map(c=>
-              <CommunityListingRow key={c._id} row= {c}/>
-              ) }
+              <CommunityListingRow key={c._id} list = {this.state.list} row= {c} click = {() =>this.clickCommunity(c._id)}/>
+            )}
           </tbody>
         </table>
       </div>

@@ -13,8 +13,7 @@ const fieldSchema = new Schema({
     require: {
         type:String, 
         required:true
-    }
-    
+    }    
 },
 {
     timestamps: true,

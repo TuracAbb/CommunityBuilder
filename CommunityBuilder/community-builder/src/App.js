@@ -11,6 +11,7 @@ import CommunityPage from "./components/community-page.component.js";
 import Login from "./components/login.component.js";
 import Register from "./components/register.component.js";
 import Profile from "./components/profile.component";
+import Datatype from "./components/datatype-create.component";
 
 
 function App() {
@@ -23,10 +24,12 @@ function App() {
        <Route path = "/edit/:id" exact component = {EditCommunity}/>
        <Route path = "/create" exact component = {CreateCommunity}/>
        <Route path = "/user" exact component = {CreateUser}/>
-       <Route path = "/community" exact component = {CommunityPage}/>
+       <Route path = "/community-page" exact component = {CommunityPage}/>
        <Route path = "/login" exact component = {Login}/>
        <Route path = "/register" exact component = {Register}/>
        <Route path = "/profile" exact component = {Profile}/>
+       <Route path = "/datatype" exact component = {Datatype}/>
+
 
        </div> 
      </Router>
