@@ -11,10 +11,10 @@ router.route('/').get((req, res) => {
 router.route('/createCommunity').post((req, res) => {
     const communityName = req.body.communityName;
     const communityDescription = req.body.communityDescription;
-    //const communityDataTypes = req.body.communityDataTypes;
-    //const communityTags = req.body.communityTags;
+    const dataTypes = req.body.dataTypes;
+    const communityTags = req.body.communityTags;
 
-    const newCommunity = new Community({communityName, communityDescription});
+    const newCommunity = new Community({communityName, communityDescription, dataTypes, communityTags});
 
     newCommunity.save()
         .then(() => res.json({data: newCommunity, error: ""}))
@@ -24,7 +24,7 @@ router.route('/createCommunity').post((req, res) => {
 router.route('/updateCommunityDatatype/:id').post((req, res) => {
     Community.findById(req.params.id)
       .then(community => {
-        community.communityDataTypes = req.body.communityDataTypes;
+       community.dataTypes = req.body.dataTypes;
         community.save()
           .then(() => res.json({data: community, error: ""}))
           .catch(err => res.json({data: "", error: err}))

@@ -10,12 +10,34 @@ const communitySchema = new Schema({
         type: String,
         required : true
     },
-    communityDataTypes :{
-        type:[Schema.Types.ObjectId, ref = 'datatype'],
-        required:false
+    dataTypes:{
+        type:[{
+            datatypeName: {
+                type: String,
+                required : false
+            },
+            datatypeField:{
+                type:[{
+                    name :{
+                        type: String,
+                        required: true
+                    },
+                    type : {
+                        type: String,
+                        required: true
+                    },
+                    required: {
+                        type:String, 
+                        required:true
+                    }  
+                }],
+                required: false
+            },
+            
+        }]
     },
     communityTags :{
-        type:String,
+        type:[],
         required:false
     }
 },

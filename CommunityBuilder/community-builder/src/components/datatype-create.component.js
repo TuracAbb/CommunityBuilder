@@ -3,67 +3,95 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-export default class Datatype extends React.Component {
+
+export default class Datatype extends React.Component{
   constructor(props) {
     super(props);
     this.state ={
       datatypeName: "",
-      fields:[{ name : "" , type : "", required : ""}]
+      datatypeField:[{ name : "" , type : "", required : ""}],
+      communityId : ""
     }
+}
+componentDidMount(){
+  
 }
 
 handleNameChange = evt => {
   this.setState({ datatypeName: evt.target.value });
 };
 
-
 handleFieldNameChange = idx => evt => {
-  const newFields = this.state.fields.map((field, sidx) => {
+  const newFields = this.state.datatypeField.map((field, sidx) => {
     if (idx !== sidx) return field;
     return { ...field, name: evt.target.value };
   });
 
-  this.setState({ fields: newFields });
+  this.setState({ datatypeField: newFields });
 };
 
 handleFieldTypeChange = idx => evt => {
-  const newFields = this.state.fields.map((field, sidx) => {
+  const newFields = this.state.datatypeField.map((field, sidx) => {
     if (idx !== sidx) return field;
     return { ...field, type: evt.target.value };
   });
 
-  this.setState({ fields: newFields });
+  this.setState({ datatypeField: newFields });
 }; 
 
   handleFieldRequireChange = idx => evt => {
-    const newFields = this.state.fields.map((field, sidx) => {
+    const newFields = this.state.datatypeField.map((field, sidx) => {
       if (idx !== sidx) return field;
       return { ...field, required: evt.target.value };
     });
 
-  this.setState({ fields: newFields });
+  this.setState({ datatypeField: newFields });
 };
-
-
 
 handleAddField = () => {
   this.setState({
-    fields: this.state.fields.concat([{ name: "" }])
+    datatypeField: this.state.datatypeField.concat([{ name: "" }])
   });
 };
 
 handleRemoveField = idx => () => {
   this.setState({
-    fields: this.state.fields.filter((s, sidx) => idx !== sidx)
+    datatypeField: this.state.datatypeField.filter((s, sidx) => idx !== sidx)
   });
 };
 handleSubmit = evt => {
-  const { datatypeName, fields } = this.state;
+  const idOfCurrentCommunity = this.props.idGreet;  
+  const { datatypeName, datatypeField } = this.state;
   debugger;
-  alert(`Incorporated: ${datatypeName} with ${fields.length  + fields[0].name + fields[0].type + fields[0].required} fields`);
+  console.log(this.communityId)
+  alert(`Incorporated: ${datatypeName} with ${datatypeField.length  + datatypeField[0].name + datatypeField[0].type + datatypeField[0].required} datatypeField`);
+
+  const arr = [];
+  for (var key in this.state.datatypeField) {
+      const f = { name : datatypeField[key].name , type : datatypeField[key].type,  required : datatypeField[key].required}
+      arr.push(f);
+  }
+  const g = {
+    dataTypes :[{
+      datatypeName : this.state.datatypeName,
+      datatypeField : arr
+    }]
+   
+  }
+
+  
+  console.log(idOfCurrentCommunity)
+  debugger;
+  axios.post('http://localhost:5000/community/updateCommunityDatatype/' + idOfCurrentCommunity, g)
+    //.then(res => console.log(res.data))
+    .then(res => alert("update"))
+    .catch(err=> console.log('eroor' + err));
 };
+
+
   
   render() {
+    
     return (
       <form onSubmit={this.handleSubmit}>
         <input
@@ -73,9 +101,9 @@ handleSubmit = evt => {
           onChange={this.handleNameChange}
         />
 
-        <h4>Fields</h4>
+        <h4>Fields</h4> 
 
-        {this.state.fields.map((field, idx) => (
+        {this.state.datatypeField.map((field, idx) => (
           <div className="field">
             <input
               type="text"

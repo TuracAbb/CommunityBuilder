@@ -39,15 +39,20 @@ export default class CommunityPage  extends React.Component {
 
   
   render() {
-    return (
+    return ( 
       <div>
+        <button type="submit" className="btn btn-warning" > JOIN </button>
+
+      <div>
+        
+      </div>
           <p> Community : {this.state.communityName} </p>
           <p> Description : {this.state.communityDescription} </p>
           <p> Tags : {this.state.communityTags} </p>
 
           <button type="submit" className="btn btn-warning" onClick={this.handleAddDatatype}>  Add Data Type </button>
           {this.state.displayDatatype && 
-          <Datatype location = {this.props.location}/>
+          <Datatype location = {this.props.location} idGreet = {this.state.communityID}/>
           }
       </div>
     );
