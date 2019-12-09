@@ -46,7 +46,6 @@ export default class CommunityList extends React.Component {
     axios.get('http://localhost:5000/community/' + id)
       .then(response => {
         localStorage.setItem('data', JSON.stringify(response.data));
-        debugger;
         console.log(response.data);
         this.props.history.push({
           pathname: '/community-page',

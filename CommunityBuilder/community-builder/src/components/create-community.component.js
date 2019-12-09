@@ -35,7 +35,7 @@ export default class CreateCommunity extends Component {
   onSubmit = (e) =>{
     e.preventDefault();
 
- const newCommunity = {
+  const newCommunity = {
       communityName : this.state.communityName,
       communityDescription : this.state.communityDescription,
       dataTypes : this.state.dataTypes,
