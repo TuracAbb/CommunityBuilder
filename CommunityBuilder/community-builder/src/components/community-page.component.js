@@ -3,7 +3,9 @@ import Datatype from '../components/datatype-create.component';
 import { throws } from 'assert';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Modal from '../components/modal.component'
+import {ButtonToolbar} from 'react-bootstrap';
+import {Modal, Button} from 'react-bootstrap';
+
 
 const datatypeListingRow = ({row, click}) =>{
   debugger;
@@ -21,13 +23,15 @@ export default class CommunityPage  extends React.Component {
       displayDatatype : false,
       showDatatypes:false,
       deneme :[],
-      modalShow:false
+      modalShow:false,
     };
 
     this.handleAddDatatype = this.handleAddDatatype.bind(this);
     this.getDatatypes = this.getDatatypes.bind(this);
     this.clickDatatype =  this.clickDatatype.bind(this);
-
+    this.MyVerticallyCenteredModal = this.MyVerticallyCenteredModal.bind(this);
+    this.handleShowModal = this.handleShowModal.bind(this);
+    this.handleHideModal = this.handleHideModal.bind(this);
   }
   componentDidMount() {
     this.getDatatypes();
@@ -48,14 +52,7 @@ export default class CommunityPage  extends React.Component {
       })
   }
 
-  showModal = () => {
-    this.setState({ modalShow: true });
-  };
-
-  hideModal = () => {
-    this.setState({ modalShow: false });
-  };
-
+  
   handleAddDatatype(){
     console.log('DT: ' + this.state.communityID);
     console.log('DT: ' + this.state.datatypes);
@@ -72,7 +69,6 @@ export default class CommunityPage  extends React.Component {
   }
   clickDatatype = (item) => {
     console.log('jsdnk' + item );
-    this.showModal()
   }
 
   clickCommunity = (id) => {
@@ -93,6 +89,48 @@ export default class CommunityPage  extends React.Component {
       })
 
   }
+    handleShowModal(){
+      console.log("clicked")
+      this.setState({
+      modalShow : true
+    })
+    console.log(this.state.setModalShow)
+  }
+    handleHideModal(){
+      console.log('hiding modal')
+      this.setState({
+        modalShow : false
+      })
+  
+    }
+  MyVerticallyCenteredModal(props) {
+    debugger;
+    console.log('Aciliyor' + props.show + props.onHide)
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Modal heading
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Centered Modal</h4>
+          <p>
+          Fields will be here
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() =>props.onHide}>Close</Button>
+          
+        </Modal.Footer>
+      </Modal>
+    );
+  }
 
   
   render() {
@@ -109,23 +147,28 @@ export default class CommunityPage  extends React.Component {
          <p>Datatypes : </p> 
          {this.state.deneme.map((item, key)=>
           <div>
-            <button type="submit"  className="btn btn-warning" onClick = {() => this.clickDatatype(item.datatypeName)}
-            > {item.datatypeName}</button>
+            <ButtonToolbar>
+              <Button variant="primary" onClick={this.handleShowModal}>
+                {item.datatypeName}
+              </Button>
+
+              <this.MyVerticallyCenteredModal
+                show={this.state.modalShow}
+                onHide={() => this.handleHideModal}
+              />
+            </ButtonToolbar>
           </div>
-         )}
+ )}
+
           <p> Posts : {this.state.communityTags} </p>
 
           <button type="submit" className="btn btn-warning" onClick={this.handleAddDatatype}>  Add Data Type </button>
           {this.state.displayDatatype && 
           <Datatype location = {this.props.location} idGreet = {this.state.communityID}/>
           }
-          <button type="submit" className="btn btn-warning" onClick={this.handleShowDatatypes}> Get Data Types </button>
-
-          <Modal show={this.state.modalShow} handleClose={this.hideModal}>
-            <p>Modal</p>
-            <p>Data</p>
-          </Modal>
+          
       </div>
+      
     );
   }
 }
