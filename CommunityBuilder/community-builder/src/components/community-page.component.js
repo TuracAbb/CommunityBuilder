@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import Datatype from '../components/datatype-create.component';
 import { throws } from 'assert';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Modal from '../components/modal.component'
+
+const datatypeListingRow = ({row, click}) =>{
+  debugger;
+}
 
 export default class CommunityPage  extends React.Component {
   constructor(props) {
@@ -14,11 +20,13 @@ export default class CommunityPage  extends React.Component {
       communityTags: '',
       displayDatatype : false,
       showDatatypes:false,
-      deneme :[]
+      deneme :[],
+      modalShow:false
     };
 
     this.handleAddDatatype = this.handleAddDatatype.bind(this);
     this.getDatatypes = this.getDatatypes.bind(this);
+    this.clickDatatype =  this.clickDatatype.bind(this);
 
   }
   componentDidMount() {
@@ -40,6 +48,14 @@ export default class CommunityPage  extends React.Component {
       })
   }
 
+  showModal = () => {
+    this.setState({ modalShow: true });
+  };
+
+  hideModal = () => {
+    this.setState({ modalShow: false });
+  };
+
   handleAddDatatype(){
     console.log('DT: ' + this.state.communityID);
     console.log('DT: ' + this.state.datatypes);
@@ -54,6 +70,17 @@ export default class CommunityPage  extends React.Component {
     })
     
   }
+  clickDatatype = (item) => {
+    console.log('jsdnk' + item );
+    this.showModal()
+  }
+
+  clickCommunity = (id) => {
+    console.log( 'HERE IS ID ' + id)
+    //once, id verip community alan bir router yazacagim ve burada o idyi biliglerini linkte state koy , sonra, donen bilgileri de create-page sayfasina pushlayacagim
+    //how to pass params with history push
+    this.getCommunityDetails(id);
+  };
 
   getDatatypes = () =>{
     axios.get('http://localhost:5000/community/getDatatypes/' + JSON.parse(localStorage.getItem('data'))._id)
@@ -79,19 +106,25 @@ export default class CommunityPage  extends React.Component {
           <p> Community : {this.state.communityName} </p>
           <p> Description : {this.state.communityDescription} </p>
           <p> Tags : {this.state.communityTags} </p>
-          <p> Datatypes :  {this.state.deneme.map((item, key)=>
-            <li>{item.datatypeName}</li>)} 
-            </p>
+         <p>Datatypes : </p> 
+         {this.state.deneme.map((item, key)=>
+          <div>
+            <button type="submit"  className="btn btn-warning" onClick = {() => this.clickDatatype(item.datatypeName)}
+            > {item.datatypeName}</button>
+          </div>
+         )}
           <p> Posts : {this.state.communityTags} </p>
-
 
           <button type="submit" className="btn btn-warning" onClick={this.handleAddDatatype}>  Add Data Type </button>
           {this.state.displayDatatype && 
           <Datatype location = {this.props.location} idGreet = {this.state.communityID}/>
           }
           <button type="submit" className="btn btn-warning" onClick={this.handleShowDatatypes}> Get Data Types </button>
-          
 
+          <Modal show={this.state.modalShow} handleClose={this.hideModal}>
+            <p>Modal</p>
+            <p>Data</p>
+          </Modal>
       </div>
     );
   }
