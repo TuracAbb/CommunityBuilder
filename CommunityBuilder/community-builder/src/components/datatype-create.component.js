@@ -2,12 +2,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import useId from "react-id-generator";
+
 
 
 export default class Datatype extends React.Component{
   constructor(props) {
     super(props);
     this.state ={
+      datatypeID:"",
       datatypeName: "",
       datatypeField:[{ name : "" , type : "", required : ""}],
       communityId : ""
@@ -61,39 +64,34 @@ handleRemoveField = idx => () => {
   });
 };
 handleSubmit = evt => {
+ 
   const idOfCurrentCommunity = this.props.idGreet;  
   const { datatypeName, datatypeField } = this.state;
-  alert(`Incorporated: ${datatypeName} with ${datatypeField.length  + datatypeField[0].name + datatypeField[0].type + datatypeField[0].required} datatypeField`);
-  debugger;
+  //alert(`Incorporated: ${datatypeName} with ${datatypeField.length  + datatypeField[0].name + datatypeField[0].type + datatypeField[0].required} datatypeField`);
   const deneme = [];
-  for (var key in JSON.parse(localStorage.getItem('datatypes'))) {
-    console.log('Heere it is :' + JSON.parse(localStorage.getItem('datatypes'))[key]);
-    const f = { datatypeField : JSON.parse(localStorage.getItem('datatypes'))[key].datatypeField , datatypeName : JSON.parse(localStorage.getItem('datatypes'))[key].datatypeName}
-    deneme.push(JSON.parse(localStorage.getItem('datatypes'))[key]);
-  } 
+
   const arr = [];
   for (var key in this.state.datatypeField) {
       const f = { name : datatypeField[key].name , type : datatypeField[key].type,  required : datatypeField[key].required}
       arr.push(f);
   }
-  
+
+  var s  = JSON.parse(localStorage.getItem('datatypes'));
+  var idGenerator = useId();
+
   const g = {
+      datatypeID : idGenerator,
       datatypeName : this.state.datatypeName,
       datatypeField : arr
   }
-  
 
- 
+  s.push(g);
 
-  console.log(g)
-  deneme.push(g);
-  //const result = Object.assign({}, g, deneme);
-  const y = {
-    dataTypes :[{
-      deneme
-    }]
- }
-    axios.post('http://localhost:5000/community/updateCommunityDatatype/' + idOfCurrentCommunity, y)
+  const result = {
+    dataTypes : s
+  }
+debugger;
+    axios.post('http://localhost:5000/community/updateCommunityDatatype/' + idOfCurrentCommunity, result)
     //.then(res => console.log(res.data))
     .then(() => alert("update"))
     .catch(err=> console.log('eroor' + err));

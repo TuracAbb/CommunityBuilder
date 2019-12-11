@@ -104,7 +104,6 @@ export default class CommunityPage  extends React.Component {
   
     }
   MyVerticallyCenteredModal(props) {
-    debugger;
     console.log('Aciliyor' + props.show + props.onHide)
     return (
       <Modal

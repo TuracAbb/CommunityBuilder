@@ -12,6 +12,10 @@ const communitySchema = new Schema({
     },
     dataTypes:{
         type:[{
+            datatypeID:{
+                type: String,
+                required : false
+            },
             datatypeName: {
                 type: String,
                 required : false
