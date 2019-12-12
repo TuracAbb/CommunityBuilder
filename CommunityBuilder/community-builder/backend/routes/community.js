@@ -1,6 +1,7 @@
 const router = require('express').Router();
 let Community = require('../models/community.model');
 
+
 router.route('/').get((req, res) => {
     Community.find()
         .then(communities =>res.json(communities))
@@ -13,6 +14,12 @@ router.route('/getDatatypes/:id').get((req, res) => {
       .then(community => res.json(community.dataTypes))
       .catch(err => res.status(400).json('Error: ' + err));
   });
+
+  router.route('/getFieldsOfDatatype/:comId/:dataId').get((req, res) => {
+    Community.findOne({_id: req.params.comId}, { dataTypes: { $elemMatch: { _id: req.params.dataId}}})
+        .then(community => res.json(community.dataTypes[0]))
+        .catch(err => res.status(400).json('Error: ' + err));
+    });
 
 router.route('/createCommunity').post((req, res) => {
     const communityName = req.body.communityName;

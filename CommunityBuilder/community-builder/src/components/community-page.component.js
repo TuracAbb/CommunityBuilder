@@ -24,6 +24,7 @@ export default class CommunityPage  extends React.Component {
       showDatatypes:false,
       deneme :[],
       modalShow:false,
+      formArray:["a"],
     };
 
     this.handleAddDatatype = this.handleAddDatatype.bind(this);
@@ -102,11 +103,28 @@ export default class CommunityPage  extends React.Component {
       this.setState({
         modalShow : false
       })
-  
     }
   MyVerticallyCenteredModal(props) {
-    debugger;
     console.log('Aciliyor ' + props)
+    const y = "";
+    const arr = [];
+    if(props.datatypeId !== null && props.show == true){
+      axios.get('http://localhost:5000/community/getFieldsOfDatatype/' + this.state.communityID+ '/' + props.datatypeId)
+      .then(response => {
+        var a = (response.data).datatypeField;
+        for (var key in a) {
+                const f = { name :a[key].name , type :a[key].type,  required :a[key].required}
+                arr.push(f);
+            }
+          this.setState({
+            formArray : arr
+          })
+          debugger;
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
     return (
       <Modal
         {...props}
@@ -123,6 +141,9 @@ export default class CommunityPage  extends React.Component {
           <h4>Centered Modal</h4>
           <p>
           Fields will be here
+          DatatypeName = {props.datatypeName}
+          DatatypeId = {props.datatypeId}
+          Array = {this.state.formArray[0].name}
           </p>
         </Modal.Body>
         <Modal.Footer>
@@ -155,6 +176,8 @@ export default class CommunityPage  extends React.Component {
               <this.MyVerticallyCenteredModal
                 show={this.state.modalShow}
                 onHide={this.handleHideModal}
+                datatypeName = {item.datatypeName}
+                datatypeId = {item._id}
               />
             </ButtonToolbar>
           </div>
