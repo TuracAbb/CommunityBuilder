@@ -97,6 +97,7 @@ export default class CommunityPage  extends React.Component {
     console.log(this.state.setModalShow)
   }
     handleHideModal(){
+      debugger;
       console.log('hiding modal')
       this.setState({
         modalShow : false
@@ -104,7 +105,8 @@ export default class CommunityPage  extends React.Component {
   
     }
   MyVerticallyCenteredModal(props) {
-    console.log('Aciliyor' + props.show + props.onHide)
+    debugger;
+    console.log('Aciliyor ' + props)
     return (
       <Modal
         {...props}
@@ -124,8 +126,7 @@ export default class CommunityPage  extends React.Component {
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() =>props.onHide}>Close</Button>
-          
+          <Button onClick={props.onHide}>Close</Button>
         </Modal.Footer>
       </Modal>
     );
@@ -153,7 +154,7 @@ export default class CommunityPage  extends React.Component {
 
               <this.MyVerticallyCenteredModal
                 show={this.state.modalShow}
-                onHide={() => this.handleHideModal}
+                onHide={this.handleHideModal}
               />
             </ButtonToolbar>
           </div>

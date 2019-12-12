@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import useId from "react-id-generator";
+import nextId from "react-id-generator";
 
 
 
@@ -67,30 +67,31 @@ handleSubmit = evt => {
  
   const idOfCurrentCommunity = this.props.idGreet;  
   const { datatypeName, datatypeField } = this.state;
-  //alert(`Incorporated: ${datatypeName} with ${datatypeField.length  + datatypeField[0].name + datatypeField[0].type + datatypeField[0].required} datatypeField`);
-  const deneme = [];
 
+  //Getting fields of new datatype
   const arr = [];
   for (var key in this.state.datatypeField) {
       const f = { name : datatypeField[key].name , type : datatypeField[key].type,  required : datatypeField[key].required}
       arr.push(f);
   }
 
+  //Get old datatypes
   var s  = JSON.parse(localStorage.getItem('datatypes'));
-  var idGenerator = useId();
 
+  //create json
   const g = {
-      datatypeID : idGenerator,
-      datatypeName : this.state.datatypeName,
+      datatypeName : datatypeName,
       datatypeField : arr
   }
-
+  //merge old and new datatypes
   s.push(g);
 
+  //add to datatypes header
   const result = {
     dataTypes : s
   }
-debugger;
+  
+  //Send request
     axios.post('http://localhost:5000/community/updateCommunityDatatype/' + idOfCurrentCommunity, result)
     //.then(res => console.log(res.data))
     .then(() => alert("update"))
