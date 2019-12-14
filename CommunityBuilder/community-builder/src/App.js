@@ -12,6 +12,8 @@ import Login from "./components/login.component.js";
 import Register from "./components/register.component.js";
 import Profile from "./components/profile.component";
 import Datatype from "./components/datatype-create.component";
+import PostForm from "./components/post-form.component";
+
 
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
        <Route path = "/register" exact component = {Register}/>
        <Route path = "/profile" exact component = {Profile}/>
        <Route path = "/datatype" exact component = {Datatype}/>
+       <Route path = "/postForm" exact component = {PostForm}/>
 
 
        </div> 

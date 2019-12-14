@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Datatype from '../components/datatype-create.component';
+import PostForm from '../components/post-form.component'
 import { throws } from 'assert';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -30,8 +31,7 @@ export default class CommunityPage  extends React.Component {
     this.handleAddDatatype = this.handleAddDatatype.bind(this);
     this.getDatatypes = this.getDatatypes.bind(this);
     this.clickDatatype =  this.clickDatatype.bind(this);
-    this.MyVerticallyCenteredModal = this.MyVerticallyCenteredModal.bind(this);
-    this.handleShowModal = this.handleShowModal.bind(this);
+    //this.handleShowModal = this.handleShowModal.bind(this);
     this.handleHideModal = this.handleHideModal.bind(this);
   }
   componentDidMount() {
@@ -90,11 +90,12 @@ export default class CommunityPage  extends React.Component {
       })
 
   }
-    handleShowModal(){
-      console.log("clicked")
+    handleShowModal(id){
       this.setState({
-      modalShow : true
-    })
+        modalShow :{
+          [id] :true
+      } 
+    });
     console.log(this.state.setModalShow)
   }
     handleHideModal(){
@@ -104,54 +105,7 @@ export default class CommunityPage  extends React.Component {
         modalShow : false
       })
     }
-  MyVerticallyCenteredModal(props) {
-    console.log('Aciliyor ' + props)
-    const y = "";
-    const arr = [];
-    if(props.datatypeId !== null && props.show == true){
-      axios.get('http://localhost:5000/community/getFieldsOfDatatype/' + this.state.communityID+ '/' + props.datatypeId)
-      .then(response => {
-        var a = (response.data).datatypeField;
-        for (var key in a) {
-                const f = { name :a[key].name , type :a[key].type,  required :a[key].required}
-                arr.push(f);
-            }
-          this.setState({
-            formArray : arr
-          })
-          debugger;
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-    }
-    return (
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h4>Centered Modal</h4>
-          <p>
-          Fields will be here
-          DatatypeName = {props.datatypeName}
-          DatatypeId = {props.datatypeId}
-          Array = {this.state.formArray[0].name}
-          </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    );
-  }
+  
 
   
   render() {
@@ -169,16 +123,17 @@ export default class CommunityPage  extends React.Component {
          {this.state.deneme.map((item, key)=>
           <div>
             <ButtonToolbar>
-              <Button variant="primary" onClick={this.handleShowModal}>
-                {item.datatypeName}
-              </Button>
-
-              <this.MyVerticallyCenteredModal
-                show={this.state.modalShow}
+              <Button variant="primary" onClick={this.handleShowModal.bind(this, item._id)}> {item.datatypeName}</Button>
+              {this.state.modalShow[item._id] && 
+                <PostForm
+                location = {this.props.location}
+                show={this.state.modalShow[item._id]}
                 onHide={this.handleHideModal}
+                communityId = {this.state.communityID}
                 datatypeName = {item.datatypeName}
                 datatypeId = {item._id}
               />
+            }
             </ButtonToolbar>
           </div>
  )}
