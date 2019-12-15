@@ -40,6 +40,19 @@ const communitySchema = new Schema({
             
         }]
     },
+    posts:{
+        type:[{
+            name :{
+                type: String,
+                required: true
+            },
+            value : {
+                type: String,
+                required: true
+            }
+        }],
+        required: false
+    },
     communityTags :{
         type:[],
         required:false

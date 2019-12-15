@@ -45,6 +45,23 @@ router.route('/updateCommunityDatatype/:id').post((req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
   });
 
+  router.route('/updateCommunityPost/:id').post((req, res) => {
+    Community.findById(req.params.id)
+      .then(community => {
+        community.posts = req.body.posts;
+        community.save()
+          .then(() => res.json({data: community, error: ""}))
+          .catch(err => res.json({data: "", error: err}))
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+
+  router.route('/getPosts/:id').get((req, res) => {
+    Community.findById(req.params.id)
+        .then(community => res.json(community.posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+    });
+
 router.route('/:id').get((req, res) => {
     Community.findById(req.params.id)
       .then(community => res.json(community))

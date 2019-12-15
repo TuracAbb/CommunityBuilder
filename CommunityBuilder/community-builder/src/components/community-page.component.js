@@ -30,12 +30,14 @@ export default class CommunityPage  extends React.Component {
 
     this.handleAddDatatype = this.handleAddDatatype.bind(this);
     this.getDatatypes = this.getDatatypes.bind(this);
+    this.getPosts = this.getPosts.bind(this);
     this.clickDatatype =  this.clickDatatype.bind(this);
     //this.handleShowModal = this.handleShowModal.bind(this);
     this.handleHideModal = this.handleHideModal.bind(this);
   }
   componentDidMount() {
     this.getDatatypes();
+    this.getPosts();
     var denemeq = []
     for (var key in JSON.parse(localStorage.getItem('datatypes'))) {
     console.log('Here it is :' + JSON.parse(localStorage.getItem('datatypes'))[key]);
@@ -83,6 +85,17 @@ export default class CommunityPage  extends React.Component {
     axios.get('http://localhost:5000/community/getDatatypes/' + JSON.parse(localStorage.getItem('data'))._id)
       .then(response => {
         localStorage.setItem('datatypes', JSON.stringify(response.data));
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+
+  }
+  getPosts = () =>{
+    axios.get('http://localhost:5000/community/getPosts/' + JSON.parse(localStorage.getItem('data'))._id)
+      .then(response => {
+        localStorage.setItem('posts', JSON.stringify(response.data));
         console.log(response.data);
       })
       .catch((error) => {

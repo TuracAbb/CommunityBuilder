@@ -26,12 +26,14 @@ handleNameChange = evt => {
 };
 
 handleFieldNameChange = idx => evt => {
+  debugger;
   const newFields = this.state.datatypeField.map((field, sidx) => {
     if (idx !== sidx) return field;
     return { ...field, name: evt.target.value };
   });
 
   this.setState({ datatypeField: newFields });
+  const y = this.state.datatypeField;
 };
 
 handleFieldTypeChange = idx => evt => {
@@ -90,7 +92,7 @@ handleSubmit = evt => {
   const result = {
     dataTypes : s
   }
-  
+
   //Send request
     axios.post('http://localhost:5000/community/updateCommunityDatatype/' + idOfCurrentCommunity, result)
     //.then(res => console.log(res.data))
