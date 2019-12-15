@@ -23,7 +23,8 @@ export default class CommunityPage  extends React.Component {
       communityTags: '',
       displayDatatype : false,
       showDatatypes:false,
-      deneme :[],
+      datatypesOfCommunity :[],
+      postsOfCommunity:[],
       modalShow:false,
       formArray:["a"],
     };
@@ -38,20 +39,26 @@ export default class CommunityPage  extends React.Component {
   componentDidMount() {
     this.getDatatypes();
     this.getPosts();
-    var denemeq = []
-    for (var key in JSON.parse(localStorage.getItem('datatypes'))) {
-    console.log('Here it is :' + JSON.parse(localStorage.getItem('datatypes'))[key]);
-    const f = { datatypeField : JSON.parse(localStorage.getItem('datatypes'))[key].datatypeField , datatypeName : JSON.parse(localStorage.getItem('datatypes'))[key].datatypeName}
-    denemeq.push(JSON.parse(localStorage.getItem('datatypes'))[key]);
-  } 
 
+    var dtType = []
+    for (var key in JSON.parse(localStorage.getItem('datatypes'))) {
+      const f = { datatypeField : JSON.parse(localStorage.getItem('datatypes'))[key].datatypeField , datatypeName : JSON.parse(localStorage.getItem('datatypes'))[key].datatypeName}
+      dtType.push(JSON.parse(localStorage.getItem('datatypes'))[key]);
+    }
+    var posts = []
+    for (var key in JSON.parse(localStorage.getItem('posts'))) {
+      posts.push(JSON.parse(localStorage.getItem('posts'))[key]);
+      console.log(posts[key])
+    } 
+  
       console.log(this.props.location);
       this.setState({
         communityID: JSON.parse(localStorage.getItem('data'))._id,
         communityName: JSON.parse(localStorage.getItem('data')).communityName,
         communityDescription:  JSON.parse(localStorage.getItem('data')).communityDescription,
         communityTags: JSON.parse(localStorage.getItem('data')).communityTags,
-        deneme:denemeq
+        datatypesOfCommunity:dtType,
+        postsOfCommunity:posts
       })
   }
 
@@ -133,7 +140,7 @@ export default class CommunityPage  extends React.Component {
           <p> Description : {this.state.communityDescription} </p>
           <p> Tags : {this.state.communityTags} </p>
          <p>Datatypes : </p> 
-         {this.state.deneme.map((item, key)=>
+         {this.state.datatypesOfCommunity.map((item, key)=>
           <div>
             <ButtonToolbar>
               <Button variant="primary" onClick={this.handleShowModal.bind(this, item._id)}> {item.datatypeName}</Button>
@@ -149,9 +156,17 @@ export default class CommunityPage  extends React.Component {
             }
             </ButtonToolbar>
           </div>
- )}
+        )}
 
-          <p> Posts : {this.state.communityTags} </p>
+          <p> Posts : </p>
+          {this.state.postsOfCommunity.map((item, key)=>
+            <div>
+              Post - {key}
+              {Object.keys(item).map(function(key){
+                return <div>{key}: {item[key]}</div>;
+              })}
+            </div>
+          )} 
 
           <button type="submit" className="btn btn-warning" onClick={this.handleAddDatatype}>  Add Data Type </button>
           {this.state.displayDatatype && 

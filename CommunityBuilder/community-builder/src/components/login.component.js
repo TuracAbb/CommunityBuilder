@@ -35,7 +35,6 @@ export default class CreateUser  extends React.Component {
           }
           else{
             this.props.history.push('/login')
-
           }
         })
         .catch(

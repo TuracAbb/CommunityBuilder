@@ -13,6 +13,8 @@ import Register from "./components/register.component.js";
 import Profile from "./components/profile.component";
 import Datatype from "./components/datatype-create.component";
 import PostForm from "./components/post-form.component";
+import EntryPage from "./components/entery-page.component"
+import Communities from "./components/community-list.component"
 
 
 
@@ -20,19 +22,19 @@ function App() {
   return (
     <Router>
       <div className = "container">  
-      <Navbar />
-      <br/>
-       <Route path = "/" exact component = {CommunityList}/>
-       <Route path = "/edit/:id" exact component = {EditCommunity}/>
-       <Route path = "/create" exact component = {CreateCommunity}/>
-       <Route path = "/user" exact component = {CreateUser}/>
-       <Route path = "/community-page" exact component = {CommunityPage}/>
-       <Route path = "/login" exact component = {Login}/>
-       <Route path = "/register" exact component = {Register}/>
-       <Route path = "/profile" exact component = {Profile}/>
-       <Route path = "/datatype" exact component = {Datatype}/>
-       <Route path = "/postForm" exact component = {PostForm}/>
-
+       
+    
+       <Route path = "/" exact component = {EntryPage}/>
+       <Route path = "/edit/:id" exact component = {EditCommunity}/>
+       <Route path = "/create" exact component = {CreateCommunity}/>
+       <Route path = "/user" exact component = {CreateUser}/>
+       <Route path = "/community-page" exact component = {CommunityPage}/>
+       <Route path = "/login" exact component = {Login}/>
+       <Route path = "/register" exact component = {Register}/>
+       <Route path = "/profile" exact component = {Profile}/>
+       <Route path = "/datatype" exact component = {Datatype}/>
+       <Route path = "/postForm" exact component = {PostForm}/>
+       <Route path = "/communities" exact component = {Communities}/>
 
        </div> 
      </Router>

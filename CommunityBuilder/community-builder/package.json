@@ -5,13 +5,19 @@
   "dependencies": {
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "file-loader": "^5.0.2",
     "jwt-decode": "^2.2.0",
+    "mdbreact": "^4.23.1",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
     "react-id-generator": "^3.0.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "^3.3.0",
+    "react-select-popover": "^0.1.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
+    "url-loader": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,5 +39,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "css-loader": "^3.3.2",
+    "style-loader": "^1.0.1"
   }
 }
