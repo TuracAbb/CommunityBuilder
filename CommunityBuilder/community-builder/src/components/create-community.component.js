@@ -1,8 +1,6 @@
   
 import React, { Component } from 'react';
 import axios from 'axios';
-//import { Dropdown } from 'semantic-ui-react';
-//import { Dropdown } from "reactstrap";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
@@ -78,7 +76,7 @@ export default class CreateCommunity extends Component {
       communityName : this.state.communityName,
       communityDescription : this.state.communityDescription,
       dataTypes : this.state.dataTypes,
-      communityTags : this.state.communityTags
+      communityTags : this.state.selectedTags
     }
     debugger;
     console.log(newCommunity);

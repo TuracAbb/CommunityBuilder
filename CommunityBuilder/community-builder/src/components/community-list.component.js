@@ -9,6 +9,7 @@ const CommunityListingRow = ({row, click}) =>{
     <tr className = "">
       <td> <Link to={"/communityPage" } onClick = {click}>{row.communityName}</Link></td>
       <td>{row.communityDescription}</td>
+
     </tr>
 
   )
@@ -78,6 +79,7 @@ export default class CommunityList extends React.Component {
             <tr>
               <th>Name</th>
               <th>Description</th>
+
             </tr>
           </thead>
           <tbody>
