@@ -2,7 +2,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 //import { Dropdown } from 'semantic-ui-react';
-import { SelectPopover } from "react-select-popover";
+//import { Dropdown } from "reactstrap";
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
 
 export default class CreateCommunity extends Component {
   constructor(props){
@@ -10,6 +13,7 @@ export default class CreateCommunity extends Component {
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.listTags = this.listTags.bind(this);
+    this.handleTags = this.handleTags.bind(this);
 
     //this.onChangeTag = this.onChangeTag.bind(this);
 
@@ -18,7 +22,8 @@ export default class CreateCommunity extends Component {
       communityDescription: '',
       communityTags:[],
       dataTypes: [],
-      showTags:false
+      showTags:false.value,
+      selectedTags:[]
     };
   }
   onChangeName = (e) => {
@@ -31,6 +36,17 @@ export default class CreateCommunity extends Component {
       communityDescription: e.target.value
     })
   }; 
+  handleTags=(e) =>{
+    debugger;
+      console.log(e[0].value + " " + e[0].label)
+      const array =[];
+      for (var key in e) {
+        const f = { qNum : e[key].value , label : e[key].label}
+        array.push(f)
+      }
+      this.setState({ selectedTags: array })
+
+  }
 
   listTags(){
     
@@ -39,7 +55,7 @@ export default class CreateCommunity extends Component {
     .then(response => {
       var tags = []
       for (var key in response.data.search) {
-        const f = { value : response.data.search[key].id , label : response.data.search[key].label}
+        const f = { value : response.data.search[key].id , label : response.data.search[key].description}
         tags.push(f)
       }
       this.setState({ communityTags: tags })
@@ -98,12 +114,18 @@ export default class CreateCommunity extends Component {
             <div className="form-group">
             <button type="button" onClick={this.listTags} className="small">
                 List Tags
-                {this.state.showTags && 
-                  <SelectPopover 
-                  options={this.state.communityTags} 
-                   />
-                }
            </button>
+           {this.state.showTags && 
+                  <Select 
+                  options={this.state.communityTags}
+                  defaultValue={[this.state.communityTags[2]]}
+                  isMulti
+                  name="tags"
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  onChange = {this.handleTags}
+                   />
+            }
             </div>
             
             <div className="form-group">
