@@ -22,8 +22,7 @@ function App() {
   return (
     <Router>
       <div className = "container">  
-       
-    
+      <Navbar />    
        <Route path = "/" exact component = {EntryPage}/>
        <Route path = "/edit/:id" exact component = {EditCommunity}/>
        <Route path = "/create" exact component = {CreateCommunity}/>

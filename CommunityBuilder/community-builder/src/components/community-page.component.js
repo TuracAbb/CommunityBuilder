@@ -4,7 +4,7 @@ import PostForm from '../components/post-form.component'
 import { throws } from 'assert';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import {ButtonToolbar} from 'react-bootstrap';
+import {ButtonToolbar, ListGroup} from 'react-bootstrap';
 import {Modal, Button} from 'react-bootstrap';
 
 
@@ -141,9 +141,8 @@ export default class CommunityPage  extends React.Component {
           <p> Tags : {this.state.communityTags} </p>
          <p>Datatypes : </p> 
          {this.state.datatypesOfCommunity.map((item, key)=>
-          <div>
-            <ButtonToolbar>
-              <Button variant="primary" onClick={this.handleShowModal.bind(this, item._id)}> {item.datatypeName}</Button>
+          <div class="card" style={{width: "18rem"}}>
+              <h5 class="card-title" variant="info" onClick={this.handleShowModal.bind(this, item._id)}> {item.datatypeName}</h5>
               {this.state.modalShow[item._id] && 
                 <PostForm
                 location = {this.props.location}
@@ -154,7 +153,6 @@ export default class CommunityPage  extends React.Component {
                 datatypeId = {item._id}
               />
             }
-            </ButtonToolbar>
           </div>
         )}
 

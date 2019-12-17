@@ -13,7 +13,7 @@ export default class PostForm  extends React.Component {
             formArray:[],
             nameOfField:"",
             //postFields:[{adi: "Turac", Resim:"jpg", numara: "port"},{adi: "Turac", Resim:"jpg", numara: "port"}],
-            postFields:[],
+            postFields:[{ nameOfField : "" , valueOfField : ""}],
             name:"",
             value:""
         }
@@ -24,25 +24,27 @@ export default class PostForm  extends React.Component {
    handleFieldNameChange = idx => evt => { 
         debugger;  
         const nme = evt.target.name
-        const k = this.state.postFields[idx];
-
+        const k = this.state.postFields[idx+1];
 
         //Eger o fielde ilk yazilirsa
-        if(this.state.postFields[idx] == undefined){
-            const newFields = this.state.postFields.map((field,sidx) => {
-                console.log("IDX :" + idx + "SDIX: " + sidx)
-                if (idx !== sidx) return field;
-                return {  ...field,
-                        nameOfField :nme,
-                        valueOfField: evt.target.value };
-                });
-            this.setState({postFields: newFields });
+        if(this.state.postFields[idx+1] == undefined){
+            console.log("UNDEFINED")
+            var s = this.state.postFields;
+
+            //create json
+            const g = {
+                nameOfField :nme,
+                valueOfField: evt.target.value
+            }
+            //merge old and new datatypes
+            s.push(g);  
+            this.setState({postFields: s });
 
         }
         else{
+            console.log("DEFINED")
             const newFields = this.state.postFields.map((field, sidx) => {
-                console.log("IDX :" + idx + "SDIX: " + sidx)
-                if (idx !== sidx) return field;
+                if (idx+1!== sidx) return field;
                 return { ...field, 
                     nameOfField :nme,
                     valueOfField: evt.target.value };
@@ -50,36 +52,6 @@ export default class PostForm  extends React.Component {
             this.setState({postFields: newFields });
 
         }
-
-        const y = this.state.postFields;
-
-
-        /*
-        console.log('Yoxlama ' + this.state.postFields[idx])
-        if(this.state.postFields[idx] == undefined){ //ilk defe gelir
-            console.log("ilk")
-            const newField = {
-                ...field, 
-                nameOfField :nme,
-                valueOfField: evt.target.value 
-            };
-        }
-        
-        else{
-            console.log("duzeltme")
-            if(this.state.postFields[idx] != undefined){  //buraya birsey girilib
-                const newFields = this.state.postFields.map((field, sidx) => {
-                    console.log("IDX :" + idx + "SDIX: " + sidx)
-                    if (idx !== sidx) return field;
-                    return { ...field, 
-                        nameOfField :nme,
-                        valueOfField: evt.target.value };
-                });
-            }
-        }
-        
-        this.setState({postFields: newFields });
-        const y = this.state.postFields;*/
     }
     setFieldName(field){
         debugger;
@@ -91,34 +63,39 @@ export default class PostForm  extends React.Component {
     handleSubmit = evt => {
         debugger;
         const idOfCurrentCommunity = this.props.communityId;  
-        const { name, value } = this.state;
-      
-        //Getting fields of new datatype
-        const arr = [];
-        for (var key in this.state.postFields) {
-            const f = { name : this.state.postFields[key].nameOfField , value : this.state.postFields[key].valueOfField}
-            arr.push(f);
+
+        var y = "{";
+        for (var key in this.state.postFields){
+            
+            if (y !="{"){
+                y = y + ", "
+            }
+            if(this.state.postFields[key].nameOfField != ""){
+                const f = "\"" + this.state.postFields[key].nameOfField +"\"" + ":" + "\""  + this.state.postFields[key].valueOfField + "\"" ;
+                y = y + f
+            }
+        
         }
+          y = y + " }"
       
-        //Get old datatypes
+        
+        //Get old posts
         var s  = JSON.parse(localStorage.getItem('posts'));
-      
-        //create json
-        const g = {
-             arr
-        }
+        var t = JSON.parse(y)
         //merge old and new datatypes
-        s.push(g);
+        s.push(t);
       
         //add to datatypes header
         const result = {
-          dataTypes : s
+          posts : s
         }
       
         //Send request
           axios.post('http://localhost:5000/community/updateCommunityPost/' + idOfCurrentCommunity, result)
           //.then(res => console.log(res.data))
-          .then(() => alert("update"))
+          .then(() => this.props.history.push({
+            pathname: '/community-page' + this.state.communityId,
+          }))
           .catch(err=> console.log('eroor' + err));
       };
    
