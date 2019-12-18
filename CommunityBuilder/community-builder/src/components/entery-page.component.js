@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { throws } from 'assert';
 import Navbar from '../components/navbar.component'
+import { MDBCol, MDBFormInline, MDBBtn } from "mdbreact";
+
 
 export default class EntryPage  extends React.Component {
     constructor(props) {
@@ -26,14 +28,13 @@ export default class EntryPage  extends React.Component {
   render() {
     return (
       <div>
-          
-            <button type="submit" className="btn btn-lg btn-primary btn-block" onClick ={this.handleLogin} >
-                Login
-            </button> 
-            <button type="submit" className="btn btn-lg btn-primary btn-block" onClick ={this.handleRegister}>
-                Register
-            </button>       
+        <div>
+          <MDBBtn gradient="aqua"  rounded size="lg" type="submit" className="mr-auto" onClick ={this.handleLogin}> Login </MDBBtn>        
         </div>
+        <div>
+          <MDBBtn gradient="aqua" rounded size="lg" type="submit" className="mr-auto" onClick ={this.handleRegister}> Register </MDBBtn>
+        </div> 
+      </div>
     );
   }
 }

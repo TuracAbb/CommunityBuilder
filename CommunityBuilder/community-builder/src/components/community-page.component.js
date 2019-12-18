@@ -8,6 +8,7 @@ import {ButtonToolbar, ListGroup} from 'react-bootstrap';
 import {Modal, Button} from 'react-bootstrap';
 
 
+
 const datatypeListingRow = ({row, click}) =>{
   debugger;
 }
@@ -150,7 +151,7 @@ export default class CommunityPage  extends React.Component {
   render() {
     return ( 
       <div>
-        <button type="submit" className="btn btn-warning" > JOIN </button>
+      <button type="submit" className="btn btn-warning" > JOIN </button>
 
       <div>
         

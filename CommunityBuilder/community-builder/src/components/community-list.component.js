@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { MDBCol, MDBFormInline, MDBBtn } from "mdbreact";
+
 
 const CommunityListingRow = ({row, click}) =>{
   
@@ -22,7 +24,8 @@ export default class CommunityList extends React.Component {
         communityID: '',
         communityName: '',
         communityDescription: '',
-        communityTags: ''
+        communityTags: '',
+        firstQuery:''
     }};
     this.handleClick = this.handleClick.bind(this);
     this.clickCommunity = this.clickCommunity.bind(this);
@@ -74,6 +77,16 @@ export default class CommunityList extends React.Component {
     return (
       <div>
         <h3>Communities</h3>
+        <MDBCol md="12">
+      <MDBFormInline className="md-form mr-auto mb-4">
+        <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
+        <MDBBtn gradient="aqua" rounded size="sm" type="submit" className="mr-auto">
+          Search
+        </MDBBtn>
+      </MDBFormInline>
+    </MDBCol>
+    
+
         <table className="table">
           <thead className="thead-light">
             <tr>
