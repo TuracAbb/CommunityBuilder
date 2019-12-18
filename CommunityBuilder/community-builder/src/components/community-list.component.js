@@ -77,14 +77,15 @@ export default class CommunityList extends React.Component {
     return (
       <div>
         <h3>Communities</h3>
+        
         <MDBCol md="12">
-      <MDBFormInline className="md-form mr-auto mb-4">
-        <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
-        <MDBBtn gradient="aqua" rounded size="sm" type="submit" className="mr-auto">
-          Search
-        </MDBBtn>
-      </MDBFormInline>
-    </MDBCol>
+          <MDBFormInline className="md-form mr-auto mb-4">
+            <input className="form-control mr-sm-2" type="text" placeholder="Search Community" aria-label="Search" />
+            <MDBBtn gradient="aqua" rounded size="sm" type="submit" className="mr-auto">
+              Search
+            </MDBBtn>
+          </MDBFormInline>
+        </MDBCol>
     
 
         <table className="table">

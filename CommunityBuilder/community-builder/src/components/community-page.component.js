@@ -4,8 +4,10 @@ import PostForm from '../components/post-form.component'
 import { throws } from 'assert';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import {ButtonToolbar, ListGroup} from 'react-bootstrap';
+import {ButtonToolbar, ListGroup, ButtonGroup} from 'react-bootstrap';
 import {Modal, Button} from 'react-bootstrap';
+import { MDBCol, MDBFormInline, MDBBtn } from "mdbreact";
+
 
 
 
@@ -160,11 +162,11 @@ export default class CommunityPage  extends React.Component {
           <p> Description : {this.state.communityDescription} </p>
           <p> Tags : </p>
            
-      
          <p>Datatypes : </p> 
          {this.state.datatypesOfCommunity.map((item, key)=>
-          <div class="card" style={{width: "18rem"}}>
-              <h5 class="card-title" variant="info" onClick={this.handleShowModal.bind(this, item._id)}> {item.datatypeName}</h5>
+          <div >
+            <ButtonGroup aria-label="Basic example">
+          <MDBBtn gradient="aqua"  rounded size="lg" type="submit" className="mr-auto" onClick={this.handleShowModal.bind(this, item._id)}> {item.datatypeName} </MDBBtn>        
               {this.state.modalShow[item._id] && 
                 <PostForm
                 location = {this.props.location}
@@ -175,6 +177,7 @@ export default class CommunityPage  extends React.Component {
                 datatypeId = {item._id}
               />
             }
+            </ButtonGroup>
           </div>
         )}
 
