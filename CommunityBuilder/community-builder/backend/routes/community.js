@@ -62,6 +62,11 @@ router.route('/updateCommunityDatatype/:id').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
     });
 
+    router.route('/getTags/:id').get((req, res) => {
+      Community.findById(req.params.id)
+          .then(community => res.json(community.communityTags))
+          .catch(err => res.status(400).json('Error: ' + err));
+      });
 router.route('/:id').get((req, res) => {
     Community.findById(req.params.id)
       .then(community => res.json(community))

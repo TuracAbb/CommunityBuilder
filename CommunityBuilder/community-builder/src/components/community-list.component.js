@@ -79,7 +79,6 @@ export default class CommunityList extends React.Component {
             <tr>
               <th>Name</th>
               <th>Description</th>
-
             </tr>
           </thead>
           <tbody>

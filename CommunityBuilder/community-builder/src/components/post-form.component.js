@@ -93,10 +93,12 @@ export default class PostForm  extends React.Component {
         //Send request
           axios.post('http://localhost:5000/community/updateCommunityPost/' + idOfCurrentCommunity, result)
           //.then(res => console.log(res.data))
-          .then(() => this.props.history.push({
-            pathname: '/community-page' + this.state.communityId,
-          }))
+          .then(() => alert("updated"))
           .catch(err=> console.log('eroor' + err));
+
+        this.props.history.push({
+            pathname: '/community-page' + this.state.communityId,
+        })
       };
    
 
