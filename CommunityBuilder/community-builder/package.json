@@ -5,8 +5,7 @@
   "engines": {
     "node": "10.15.0"
   },
-  
-  "repository":{
+  "repository": {
     "type": "git",
     "url": "https://git.heroku.com/enigmatic-beach-28243.git"
   },
