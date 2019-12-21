@@ -33,7 +33,7 @@
     "url-loader": "^3.0.0"
   },
   "scripts": {
-    "start": "nodemon server",
+    "start": "nodemon server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
