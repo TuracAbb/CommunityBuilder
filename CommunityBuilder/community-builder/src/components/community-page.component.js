@@ -153,10 +153,14 @@ export default class CommunityPage  extends React.Component {
   render() {
     return ( 
       <div>
-      <button type="submit" className="btn btn-warning" > JOIN </button>
 
       <div>
         
+      </div>
+      <div>
+      <p> Community : {this.state.communityName} </p> 
+      <button type="submit" className="btn btn-warning" > JOIN </button>
+
       </div>
           <p> Community : {this.state.communityName} </p>
           <p> Description : {this.state.communityDescription} </p>

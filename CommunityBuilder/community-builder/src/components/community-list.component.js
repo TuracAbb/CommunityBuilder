@@ -6,14 +6,12 @@ import { MDBCol, MDBFormInline, MDBBtn } from "mdbreact";
 
 
 const CommunityListingRow = ({row, click}) =>{
-  
   return (
     <tr className = "">
       <td> <Link to={"/communityPage" } onClick = {click}>{row.communityName}</Link></td>
       <td>{row.communityDescription}</td>
 
     </tr>
-
   )
 }
 
@@ -25,10 +23,12 @@ export default class CommunityList extends React.Component {
         communityName: '',
         communityDescription: '',
         communityTags: '',
-        firstQuery:''
+        searchedCommunity:''
     }};
     this.handleClick = this.handleClick.bind(this);
     this.clickCommunity = this.clickCommunity.bind(this);
+    this.getSearchElement = this.getSearchElement.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
 
 
 }
@@ -73,6 +73,18 @@ export default class CommunityList extends React.Component {
      // return <Community community={currentCommunity} key={currentCommunity._id} onClick={this.handleClick}/>;
     //})
   }
+    getSearchElement  = (e) => {
+      this.setState({ searchedCommunity: e.target.value })
+      console.log(this.state.searchedCommunity)
+    }
+    handleSearch(event){
+      debugger;
+      var list = this.state.communities.communityName;
+      list = list.filter(function(item){
+        return item.toLowerCase().search(
+          event.target.value.toLowerCase()) !== -1;
+      });
+    }
   render() {
     return (
       <div>
@@ -80,8 +92,8 @@ export default class CommunityList extends React.Component {
         
         <MDBCol md="12">
           <MDBFormInline className="md-form mr-auto mb-4">
-            <input className="form-control mr-sm-2" type="text" placeholder="Search Community" aria-label="Search" />
-            <MDBBtn gradient="aqua" rounded size="sm" type="submit" className="mr-auto">
+            <input className="form-control mr-sm-2" type="text" placeholder="Search Community" aria-label="Search" onChange ={this.handleSearch}/>
+            <MDBBtn gradient="aqua" rounded size="sm" type="submit" className="mr-auto" onClick={this.handleSearch}>
               Search
             </MDBBtn>
           </MDBFormInline>
