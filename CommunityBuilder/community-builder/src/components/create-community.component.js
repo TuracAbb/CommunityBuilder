@@ -53,7 +53,7 @@ export default class CreateCommunity extends Component {
     .then(response => {
       var tags = []
       for (var key in response.data.search) {
-        const f = { value : response.data.search[key].id , label : response.data.search[key].description}
+        const f = { value : response.data.search[key].id , label : response.data.search[key].label}
         tags.push(f)
       }
       this.setState({ communityTags: tags })

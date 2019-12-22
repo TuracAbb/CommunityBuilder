@@ -18,10 +18,10 @@ class Profile extends Component {
             console.log('Token : ' + localStorage.getItem('usertoken'))
             const token = localStorage.getItem('usertoken')
             const decoded = jwt_decode(token)
-            console.log(decoded.name)
+            console.log('D' + decoded.name + decoded.surname)
             this.setState({
-                name: decoded.name,
-                surname: decoded.surname,
+                name: decoded.surname,
+                surname: decoded.name,
                 username: decoded.username,
                 email: decoded.email
             })
@@ -39,7 +39,7 @@ class Profile extends Component {
                 <tbody>
                   <tr>
                     <td>Fist Name</td>
-                    <td>{this.state.username}</td>
+                    <td>{this.state.name}</td>
                   </tr>
                   <tr>
                     <td>Last Name</td>

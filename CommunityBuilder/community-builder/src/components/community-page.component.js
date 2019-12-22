@@ -101,6 +101,7 @@ export default class CommunityPage  extends React.Component {
   };
 
   getDatatypes = () =>{
+    console.log(JSON.parse(localStorage.getItem('data')).communityName);
     axios.get('http://localhost:5000/community/getDatatypes/' + JSON.parse(localStorage.getItem('data'))._id)
       .then(response => {
         localStorage.setItem('datatypes', JSON.stringify(response.data));
@@ -162,22 +163,26 @@ export default class CommunityPage  extends React.Component {
         
       </div>
       <div>
-      <p> Community : {this.state.communityName} </p> 
-      <button type="submit" className="btn btn-warning" > JOIN </button>
-
+        Community : {this.state.communityName}  <button type="submit" className="btn btn-warning" > JOIN </button>
       </div>
           <p> Description : {this.state.communityDescription} </p>
           <p> Tags : </p>
-          {this.state.tagsOfCommunity.map((item, key)=>
-            <div>
-                #{item.label}
-            </div>
-          )} 
+            {this.state.tagsOfCommunity.map((item, key)=>
+              <div>
+                  #{item.label}
+              </div>
+            )} 
            
          <p>Datatypes : </p> 
-         {this.state.datatypesOfCommunity.map((item, key)=>
+         
+         <button type="submit" className="btn btn-warning" onClick={this.handleAddDatatype}>  Add Data Type </button>
+          {this.state.displayDatatype && 
+          <Datatype location = {this.props.location} idGreet = {this.state.communityID}/>
+          }
+
+          <ButtonGroup aria-label="Basic example">
+          {this.state.datatypesOfCommunity.map((item, key)=>
           <div >
-            <ButtonGroup aria-label="Basic example">
           <MDBBtn gradient="aqua"  rounded size="lg" type="submit" className="mr-auto" onClick={this.handleShowModal.bind(this, item._id)}> {item.datatypeName} </MDBBtn>        
               {this.state.modalShow[item._id] && 
                 <PostForm
@@ -188,11 +193,8 @@ export default class CommunityPage  extends React.Component {
                 datatypeName = {item.datatypeName}
                 datatypeId = {item._id}
               />
-            }
-            </ButtonGroup>
-          </div>
-        )}
-      
+            }</div>)}
+            </ButtonGroup>          
       
           <p> Posts : </p>
           {this.state.postsOfCommunity.map((item, key)=>
@@ -207,12 +209,6 @@ export default class CommunityPage  extends React.Component {
           </Card.Body>
         </Card>
         )} 
-          
-
-          <button type="submit" className="btn btn-warning" onClick={this.handleAddDatatype}>  Add Data Type </button>
-          {this.state.displayDatatype && 
-          <Datatype location = {this.props.location} idGreet = {this.state.communityID}/>
-          }
           
       </div>
       
