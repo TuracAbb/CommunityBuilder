@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Datatype from '../components/datatype-create.component';
 import PostForm from '../components/post-form.component'
+import GenericPost from '../components/generic-post.component'
 import { throws } from 'assert';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -30,6 +31,7 @@ export default class CommunityPage  extends React.Component {
       postsOfCommunity:[],      
       tagsOfCommunity:[],
       modalShow:false,
+      showGeneric:false,
       formArray:["a"],
     };
 
@@ -143,13 +145,30 @@ export default class CommunityPage  extends React.Component {
           [id] :true
       } 
     });
+    
     console.log(this.state.setModalShow)
   }
+
     handleHideModal(){
       debugger;
       console.log('hiding modal')
       this.setState({
         modalShow : false
+      })
+    }
+    handleShowGeneric(id){
+      this.setState({
+        showGeneric:true
+      
+    });
+    
+  }
+  
+    handleHideGeneric(){
+      debugger;
+      console.log('hiding modal')
+      this.setState({
+        showGeneric : false
       })
     }
   
@@ -179,6 +198,15 @@ export default class CommunityPage  extends React.Component {
           {this.state.displayDatatype && 
           <Datatype location = {this.props.location} idGreet = {this.state.communityID}/>
           }
+           <button type="submit" className="btn btn-info" onClick={this.handleShowGeneric.bind(this)}> Generic Post </button>
+           {this.state.showGeneric && 
+                <GenericPost
+                location = {this.props.location}
+                show={this.state.showGeneric}
+                onHide={this.handleHideGeneric}
+                communityId = {this.state.communityID}
+              />
+            }
 
           <ButtonGroup aria-label="Basic example">
           {this.state.datatypesOfCommunity.map((item, key)=>
