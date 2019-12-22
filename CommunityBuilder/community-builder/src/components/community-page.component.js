@@ -27,7 +27,8 @@ export default class CommunityPage  extends React.Component {
       displayDatatype : false,
       showDatatypes:false,
       datatypesOfCommunity :[],
-      postsOfCommunity:[],
+      postsOfCommunity:[],      
+      tagsOfCommunity:[],
       modalShow:false,
       formArray:["a"],
     };
@@ -56,9 +57,9 @@ export default class CommunityPage  extends React.Component {
       console.log(posts[key])
     } 
     var tags = []
-    for (var key in JSON.parse(localStorage.getItem('posts'))) {
-      tags.push(JSON.parse(localStorage.getItem('posts'))[key]);
-      console.log(posts[key])
+    for (var key in JSON.parse(localStorage.getItem('tags'))) {
+      tags.push(JSON.parse(localStorage.getItem('tags'))[key]);
+      console.log(tags[key])
     } 
   
       console.log(this.props.location);
@@ -111,9 +112,10 @@ export default class CommunityPage  extends React.Component {
 
   }
   getPosts = () =>{
+    debugger;
     axios.get('http://localhost:5000/community/getPosts/' + JSON.parse(localStorage.getItem('data'))._id)
       .then(response => {
-        localStorage.setItem('tags', JSON.stringify(response.data));
+        localStorage.setItem('posts', JSON.stringify(response.data));
         console.log(response.data);
       })
       .catch((error) => {
@@ -122,14 +124,16 @@ export default class CommunityPage  extends React.Component {
 
   }
   getTags = () =>{
+    console.log('MY ID IS : ' + JSON.parse(localStorage.getItem('data'))._id)
     axios.get('http://localhost:5000/community/getTags/' + JSON.parse(localStorage.getItem('data'))._id)
       .then(response => {
-        localStorage.setItem('posts', JSON.stringify(response.data));
-        console.log(response.data);
+        localStorage.setItem('tags', JSON.stringify(response.data));
+        console.log("RES HERE"  + response.data);
       })
       .catch((error) => {
         console.log(error);
       })
+      console.log("SETTED")
 
   }
     handleShowModal(id){
@@ -162,9 +166,13 @@ export default class CommunityPage  extends React.Component {
       <button type="submit" className="btn btn-warning" > JOIN </button>
 
       </div>
-          <p> Community : {this.state.communityName} </p>
           <p> Description : {this.state.communityDescription} </p>
           <p> Tags : </p>
+          {this.state.tagsOfCommunity.map((item, key)=>
+            <div>
+                #{item.label}
+            </div>
+          )} 
            
          <p>Datatypes : </p> 
          {this.state.datatypesOfCommunity.map((item, key)=>
