@@ -11,7 +11,7 @@ export default class EntryPage  extends React.Component {
         this.handleLogin = this.handleLogin.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
     
-    
+
     }
 
     handleLogin(){

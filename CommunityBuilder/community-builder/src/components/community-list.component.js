@@ -23,7 +23,9 @@ export default class CommunityList extends React.Component {
         communityName: '',
         communityDescription: '',
         communityTags: '',
-        searchedCommunity:''
+        searchedCommunity:'',
+        showFounded:false,
+        foundedCommunity:[]
     }};
     this.handleClick = this.handleClick.bind(this);
     this.clickCommunity = this.clickCommunity.bind(this);
@@ -37,10 +39,13 @@ export default class CommunityList extends React.Component {
     axios.get('http://localhost:5000/community/')
       .then(response => {
         this.setState({ communities: response.data })
+        localStorage.setItem('searchedCom', JSON.stringify(response.data))
       })
       .catch((error) => {
         console.log(error);
       })
+    debugger;
+    
   }
   handleClick = (e) => {
     console.log(e.target._id)
@@ -79,23 +84,33 @@ export default class CommunityList extends React.Component {
     }
     handleSearch(event){
       debugger;
-      var list = this.state.communities.communityName;
-      list = list.filter(function(item){
-        return item.toLowerCase().search(
-          event.target.value.toLowerCase()) !== -1;
-      });
+
+      for (var key in this.state.communities) {
+        var a = this.state.searchedCommunity;
+        var b = this.state.communities[key].communityName
+        if(a===b){
+          var s = [];
+          console.log("Found " + this.state.searchedCommunity + " " + this.state.communities[key].communityName)
+          var t = this.state.communities[key];
+          s.push(t);
+          this.setState({foundedCommunity:s})
+          this.setState({ showFounded: true})
+        }
+      }
+    
     }
+    
   render() {
     return (
       <div>
-        <h3>Communities</h3>
-        
+        <h3>Communities</h3>  
         <MDBCol md="12">
           <MDBFormInline className="md-form mr-auto mb-4">
-            <input className="form-control mr-sm-2" type="text" placeholder="Search Community" aria-label="Search" onChange ={this.handleSearch}/>
+            <input className="form-control mr-sm-2" type="text" placeholder="Search Community" aria-label="Search" onChange ={this.getSearchElement}/>
             <MDBBtn gradient="aqua" rounded size="sm" type="submit" className="mr-auto" onClick={this.handleSearch}>
               Search
             </MDBBtn>
+            
           </MDBFormInline>
         </MDBCol>
     
@@ -108,7 +123,10 @@ export default class CommunityList extends React.Component {
             </tr>
           </thead>
           <tbody>
-            { this.state.communities.map(c=>
+            { !this.state.showFounded && this.state.communities.map(c=>
+              <CommunityListingRow key={c._id} list = {this.state.list} row= {c} click = {() =>this.clickCommunity(c._id)}/>
+            )}
+            { this.state.showFounded && this.state.foundedCommunity.map(c=>
               <CommunityListingRow key={c._id} list = {this.state.list} row= {c} click = {() =>this.clickCommunity(c._id)}/>
             )}
           </tbody>
