@@ -4,7 +4,7 @@ import PostForm from '../components/post-form.component'
 import { throws } from 'assert';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import {ButtonToolbar, ListGroup, ButtonGroup} from 'react-bootstrap';
+import {ButtonToolbar, ListGroup, ButtonGroup, Card} from 'react-bootstrap';
 import {Modal, Button} from 'react-bootstrap';
 import { MDBCol, MDBFormInline, MDBBtn } from "mdbreact";
 
@@ -192,16 +192,22 @@ export default class CommunityPage  extends React.Component {
             </ButtonGroup>
           </div>
         )}
-
+      
+      
           <p> Posts : </p>
           {this.state.postsOfCommunity.map((item, key)=>
-            <div>
-              Post - {key}
+        <Card style={{ width: '18rem' }}>
+          <Card.Body>
+            <Card.Title>Post - {key}</Card.Title>
+            <Card.Text>
               {Object.keys(item).map(function(key){
-                return <div>{key}: {item[key]}</div>;
-              })}
-            </div>
-          )} 
+                  return <div>{key}: {item[key]}</div>;
+                })}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+        )} 
+          
 
           <button type="submit" className="btn btn-warning" onClick={this.handleAddDatatype}>  Add Data Type </button>
           {this.state.displayDatatype && 
